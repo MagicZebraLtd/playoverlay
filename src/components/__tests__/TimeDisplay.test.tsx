@@ -1,5 +1,7 @@
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { clockFontSize } from '../TimeDisplay/TimeDisplay';
+import { defaultMatchSettings } from '@playoverlay/core';
+import TimeDisplay, { clockFontSize } from '../TimeDisplay/TimeDisplay';
 
 const cqw = (size: string) => Number(/([\d.]+)cqw/.exec(size)?.[1]);
 
@@ -31,5 +33,27 @@ describe('clockFontSize', () => {
     expect(clockFontSize('45:30', undefined, '-0:30')).toBe(
       clockFontSize('59:47', undefined, '-14:47')
     );
+  });
+});
+
+describe('TimeDisplay', () => {
+  it('sizes the clock row from the clock, the added time and the remaining time', () => {
+    render(
+      <TimeDisplay
+        time={{
+          time: '47:30',
+          additionalTime: 3,
+          remainingTime: '00:00',
+          matchPhase: 'firstHalf',
+          paused: true,
+        }}
+        matchSettings={defaultMatchSettings}
+      />
+    );
+    // The clock and the remaining time share one row whose font size both
+    // are drawn from, so the row carries the size.
+    const row = screen.getByText('47:30').closest('div');
+    expect(row?.style.fontSize).toBe(clockFontSize('47:30', 3, '00:00'));
+    expect(screen.getByText('00:00')).toBeInTheDocument();
   });
 });
