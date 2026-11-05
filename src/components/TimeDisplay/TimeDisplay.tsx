@@ -23,7 +23,7 @@ export interface Props {
 // than a digit, so counting them as one keeps a little to spare.
 const CHARACTER_WIDTH_EM = 0.62;
 const ADDED_TIME_EM = 0.32;
-const REMAINING_TIME_EM = 0.6;
+const REMAINING_TIME_EM = 0.7;
 const GAP_EM = 0.25;
 
 // The clock's font size: as large as lets the clock and the remaining time
@@ -162,7 +162,7 @@ export default function TimeDisplay({
               <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-fg/60">
                 {t('dashboard:timeControl.remaining')}
               </p>
-              <p className="text-[0.6em]">{time.remainingTime}</p>
+              <p className="text-[0.7em]">{time.remainingTime}</p>
             </div>
           )}
         </div>
